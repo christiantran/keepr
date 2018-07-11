@@ -20,7 +20,7 @@ namespace keepr.Repositories
             try
             {
                 var sql = @"
-                INSERT INTO user (id, username, email, password)
+                INSERT INTO users (id, username, email, password)
                 VALUES (@Id, @Username, @Email, @Password);
                 ";
                     creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);

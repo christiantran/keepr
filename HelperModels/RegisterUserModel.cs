@@ -4,6 +4,7 @@ namespace keepr.Models
 {
     public class RegisterUserModel
     {
+        public string Id { get; set; }
         [MaxLength(20)]
 
         public string Username { get; set; }
