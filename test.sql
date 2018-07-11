@@ -15,25 +15,29 @@
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId VARCHAR(255),
---     INDEX userId (userId),
---     FOREIGN KEY (userId)
+--     authorId VARCHAR(255),
+--     INDEX authorId (authorId),
+--     FOREIGN KEY (authorId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
 
+-- DROP TABLE vaults;
+
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId VARCHAR(255),
---     INDEX userId (userId),
---     FOREIGN KEY (userId)
+--     authorId VARCHAR(255) NOT NULL,
+--     INDEX authorId (authorId),
+--     FOREIGN KEY (authorId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
+
+-- DROP TABLE keeps;
 
 -- CREATE TABLE posts (
 --   id int NOT NULL AUTO_INCREMENT,
