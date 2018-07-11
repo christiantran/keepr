@@ -33,7 +33,7 @@ namespace keepr.Repositories
                         Password = creds.Password
                     });
 
-                    return  new UserReturnModel()
+                    return new UserReturnModel()
                     {
                         Id = id,
                         Username = creds.Username,
@@ -120,9 +120,9 @@ namespace keepr.Repositories
         }
 
 
-    // internal IEnumerable<Post> GetUserFavs(string id)
+    // internal IEnumerable<Keept> GetUserFavs(string id)
     // {
-    //   return _db.Query<Post>(@"
+    //   return _db.Query<Keep>(@"
     //   SELECT * FROM userfavs uf
     //   INNER JOIN posts p ON p.id = uf.postId 
     //   WHERE (userId = @id)", new{id});
