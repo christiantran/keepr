@@ -11,7 +11,8 @@ namespace keepr.Repositories
     {
 
     }
-    // Create Vault
+
+    // CREATE VAULT
     public Vault CreateVault(Vault newVault)
     {
       int id = _db.ExecuteScalar<int>(@"
@@ -22,22 +23,26 @@ namespace keepr.Repositories
       newVault.Id = id;
       return newVault;
     }
-    // GetAll Vault
+
+    // GET ALL VAULTS
     public IEnumerable<Vault> GetAll()
     {
       return _db.Query<Vault>("SELECT * FROM vaults;");
     }
-    // GetbyAuthor
+
+    // GET BY AUTHOR
     public IEnumerable<Vault> GetbyAuthorId(int id)
     {
       return _db.Query<Vault>("SELECT * FROM vaults WHERE authorId = @id;", new { id });
     }
-    // GetbyId
+
+    // GET BY ID
     public Vault GetbyVaultId(int id)
     {
       return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults WHERE id = @id;", new { id });
     }
-    // Edit
+
+    // EDIT VAULT
     public Vault EditVault(int id, Vault vault)
     {
       vault.Id = id;
@@ -53,7 +58,8 @@ namespace keepr.Repositories
       }
       return null;
     }
-    // Delete
+
+    // DELETE VAULT
     public bool DeletVault(int id)
     {
       var i = _db.Execute(@"
@@ -67,7 +73,6 @@ namespace keepr.Repositories
       }
       return false;
     }
-
 
   }
 

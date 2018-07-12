@@ -10,10 +10,12 @@ namespace keepr.Controllers
   public class VaultController : Controller
   {
     private readonly VaultRepository _db;
+
     public VaultController(VaultRepository repo)
     {
       _db = repo;  
     }
+
     [HttpPost]
     [Authorize]
     public Vault CreateVault([FromBody]Vault newVault)
@@ -26,25 +28,29 @@ namespace keepr.Controllers
       }
       return null;
     }
-    //get all Vaults
+
+    //GET ALL VAULTS
     [HttpGet]
     public IEnumerable<Vault> GetAll()
     {
       return _db.GetAll();
     }
-    //get Vault by id
+
+    //GET BY ID
     [HttpGet("{id}")]
     public Vault GetById(int id)
     {
       return _db.GetbyVaultId(id);
     }
-    //get Vault by author
+
+    //GET BY AUTHOR
     [HttpGet("author/{id}")]
     public IEnumerable<Vault> GetByAuthorId(int id)
     {
       return _db.GetbyAuthorId(id);
     }
-    //edit Vault
+
+    //EDIT VAULT
     [HttpPut("{id}")]
     public Vault EditVault(int id, [FromBody]Vault newVault)
     {
