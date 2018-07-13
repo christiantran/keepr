@@ -10,20 +10,7 @@
 -- );
 
 
-
--- CREATE TABLE vaults (
---     id int NOT NULL AUTO_INCREMENT,
---     name VARCHAR(20) NOT NULL,
---     description VARCHAR(255) NOT NULL,
---     authorId VARCHAR(255),
---     INDEX authorId (authorId),
---     FOREIGN KEY (authorId)
---         REFERENCES users(id)
---         ON DELETE CASCADE,  
---     PRIMARY KEY (id)
--- );
-
--- DROP TABLE vaults;
+-- DROP TABLE keeps;
 
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -37,39 +24,23 @@
 --     PRIMARY KEY (id)
 -- );
 
--- DROP TABLE keeps;
 
--- CREATE TABLE posts (
---   id int NOT NULL AUTO_INCREMENT,
---   body VARCHAR(255),
---   title VARCHAR(255) NOT NULL,
---   authorId VARCHAR(255) NOT NULL,
+-- DROP TABLE vaults;
 
---   PRIMARY KEY (id),
---   INDEX (authorId),
-
---   FOREIGN KEY (authorId)
---     REFERENCES users(id)
+-- CREATE TABLE vaults (
+--     id int NOT NULL AUTO_INCREMENT,
+--     name VARCHAR(20) NOT NULL,
+--     description VARCHAR(255) NOT NULL,
+--     authorId VARCHAR(255),
+--     INDEX authorId (authorId),
+--     FOREIGN KEY (authorId)
+--         REFERENCES users(id)
+--         ON DELETE CASCADE,  
+--     PRIMARY KEY (id)
 -- );
 
 
--- CREATE TABLE userfavs (
---   id int NOT NULL AUTO_INCREMENT,
---   postId int NOT NULL,
---   userId VARCHAR(255) NOT NULL,
-
---   PRIMARY KEY (id),
---   INDEX (userid),
-
---   FOREIGN KEY (postId)
---     REFERENCES posts(id)
---     ON DELETE CASCADE,
-
---   FOREIGN KEY (userId)
---     REFERENCES users(id)
---     ON DELETE CASCADE
--- );
-
+-- DROP TABLE vaultkeeps;
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -105,3 +76,35 @@
 
 -- DELETE FROM vaults WHERE id = 2,
 -- DELETE FROM users WHERE id = 1
+
+
+-- CREATE TABLE posts (
+--   id int NOT NULL AUTO_INCREMENT,
+--   body VARCHAR(255),
+--   title VARCHAR(255) NOT NULL,
+--   authorId VARCHAR(255) NOT NULL,
+
+--   PRIMARY KEY (id),
+--   INDEX (authorId),
+
+--   FOREIGN KEY (authorId)
+--     REFERENCES users(id)
+-- );
+
+
+-- CREATE TABLE userfavs (
+--   id int NOT NULL AUTO_INCREMENT,
+--   postId int NOT NULL,
+--   userId VARCHAR(255) NOT NULL,
+
+--   PRIMARY KEY (id),
+--   INDEX (userid),
+
+--   FOREIGN KEY (postId)
+--     REFERENCES posts(id)
+--     ON DELETE CASCADE,
+
+--   FOREIGN KEY (userId)
+--     REFERENCES users(id)
+--     ON DELETE CASCADE
+-- );
