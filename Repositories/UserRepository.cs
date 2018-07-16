@@ -77,13 +77,12 @@ namespace keepr.Repositories
             if (id != null)
             {
                 User savedUser = _db.QueryFirstOrDefault<User>(@"
-                    SELECT * FROM user WHERE id = @id
+                    SELECT * FROM users WHERE id = @id
                 ", new { id });
                 return savedUser.GetReturnModel();
             }
             return null;
         }
-
         internal UserReturnModel UpdateUser(UserReturnModel user)
         {
             var i = _db.Execute(@"
@@ -114,32 +113,11 @@ namespace keepr.Repositories
                         password = @NewPassword
                     WHERE id = @id
                 ", user);
-                return "Good Job";
+                return "Successfully changed password";
             }
-            return "Umm nope!";
+            return "Try again";
         }
 
-
-    // internal IEnumerable<Post> GetUserFavs(string id)
-    // {
-    //   return _db.Query<Post>(@"
-    //   SELECT * FROM userfavs uf
-    //   INNER JOIN posts p ON p.id = uf.postId 
-    //   WHERE (userId = @id)", new{id});
-    // }
-
-    // internal bool AddFav(int postId, string userId)
-    // {
-    //   int id = _db.Execute(@"
-    //     INSERT INTO userfavs (postId, userId)
-    //     VALUES (@postId, @userId);
-    //   ", new {
-    //     postId,
-    //     userId
-    //   });
-
-    //   return id > 0;
-    // }
 
 
     }

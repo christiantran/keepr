@@ -32,48 +32,76 @@ export default new vuex.Store({
       state.user = user
     },
     addKeep(state, keep) {
-      state.keeps = []
+      state.keeps = keep
+    },
+    deleteKeep(state) {
+      state.keeps = {}
     },
     setKeeps(state, payload) {
       state.keeps = payload
     },
     addVault(state, vault) {
-      state.vaults = []
+      state.vaults = vault
     },
     setVaults(state, payload) {
       state.vaults = payload
     },
+    deleteVault(state) {
+      state.vaults = []
+    }
   },
 
   actions: {
     // AUTH
+
+    // login({ commit }, loginCredentials) {
+    //   auth.post('login', loginCredentials)
+    //     .then(res => {
+    //       console.log('Successfully logged in')
+    //       commit('setUser', res.data)
+    //       router.push({ name: 'Profile' })
+    //     })
+    // },
+
     login({ commit }, loginCredentials) {
       auth.post('login', loginCredentials)
         .then(res => {
           console.log('Successfully logged in')
-          commit('setUser', res.data)
-          router.push({ name: 'Profile' })
+          console.log(res.data)
+          commit('setUser', res.data.data)
+          router.push({ name: 'Home' })
         })
     },
 
     register({ commit, dispatch }, userData) {
       auth.post('register', userData)
-      .then(res => {
-        console.log('Successfully registered')
-        commit('setUser', res.data)
-        router.push({ name: 'login' })
-      })
+        .then(res => {
+          console.log('Successfully registered')
+          commit('setUser', res.data)
+          router.push({ name: 'Home' })
+          dispatch(res.data)
+        })
     },
-    
+
+    // register({ commit }, userData) {
+    //   console.log(userData)
+    //   auth.post('register', userData)
+    //     .then(res => {
+    //       commit('setUser', res.data)
+    //       router.push({ name: 'Profile' })
+    //     })
+    // },
+
     authenticate({ commit, dispatch }) {
       auth.get('authenticate')
-      .then(res => {
-        commit('setUser', res.data)
-        router.push({ name: 'Home' })
-      })
-      .catch(res => {
-        console.log(res.data)
-      })
+        .then(res => {
+          commit('setUser', res.data)
+          router.push({ name: 'Home' })
+          dispatch(res.data)
+        })
+        .catch(res => {
+          console.log(res.data)
+        })
     },
 
     //   logout({ commit, dispatch }) {
@@ -86,29 +114,42 @@ export default new vuex.Store({
     // },
 
     // KEEPS
-    addKeep({ dispatch, commit }, keep) {
+    addKeep({ dispatch }, keep) {
       api.post('/keeps', keep)
         .then(res => {
           dispatch('getKeeps')
         })
     },
 
-    getKeeps({ commit, dispatch }) {
+    getKeeps({ commit }) {
       api.get('/keeps')
         .then(res => {
           commit('setKeeps', res.data)
         })
     },
 
+    // viewBoard({ commit, dispatch, state }, boardId) {
+    //   api.get('/boards/' + boardId)
+    //     .then(res => {
+    //       commit('setActiveBoard', res.data)
+    //     })
+    // },
+    // viewTruck({ commit }, id) {
+    //   api.get('api/trucks/' + id)
+    //     .then(res => {
+    //       commit('setActiveTruck', res.data)
+    //     })
+    // },
+
     // VAULTS
-    addVault({ dispatch, commit }, vault) {
+    addVault({ dispatch }, vault) {
       api.post('/vault', vault)
         .then(res => {
           dispatch('getvaults')
         })
     },
 
-    getVaults({ commit, dispatch }) {
+    getVaults({ commit }) {
       api.get('/vaults')
         .then(res => {
           commit('setvaults', res.data)
