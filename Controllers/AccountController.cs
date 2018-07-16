@@ -36,84 +36,75 @@ namespace keepr.Controllers
             }
             return null;
         }
-    [HttpPost("login")]
+        [HttpPost("login")]
 
-    public async Task<UserReturnModel> Login([FromBody]LoginUserModel creds)
-    {
-        if (ModelState.IsValid)
+        public async Task<UserReturnModel> Login([FromBody]LoginUserModel creds)
         {
-            UserReturnModel user = _db.Login(creds);
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                ClaimsPrincipal principal = user.SetClaims();
-                await HttpContext.SignInAsync(principal);
-                return user;
+                UserReturnModel user = _db.Login(creds);
+                if (user != null)
+                {
+                    ClaimsPrincipal principal = user.SetClaims();
+                    await HttpContext.SignInAsync(principal);
+                    return user;
+                }
             }
+            return null;
         }
-        return null;
-    }
 
-    [HttpGet("authenticate")]
+        [HttpGet("authenticate")]
 
-    public UserReturnModel Authenticate()
-    {
-        var user = HttpContext.User;
-        var id = user.Identity.Name;
-        return _db.GetUserById(id);
-    }
-
-    [Authorize]
-    [HttpPut]
-
-    public UserReturnModel UpdateAccount([FromBody]UserReturnModel user)
-    {
-        var email = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Email)
-            .Select(c => c.Value).SingleOrDefault();
-        var sessionUser = _db.GetUserByEmail(email);
-
-        if (sessionUser.Id == user.Id)
+        public UserReturnModel Authenticate()
         {
-            return _db.UpdateUser(user);
+            var user = HttpContext.User;
+            var id = user.Identity.Name;
+            return _db.GetUserById(id);
         }
-        return null;
-    }
 
-    [Authorize]
-    [HttpPut("change-password")]
-    
-    public string ChangePassword([FromBody]ChangeUserPasswordModel user)
-    {
-        if (ModelState.IsValid)
+        [Authorize]
+        [HttpPut]
+
+        public UserReturnModel UpdateAccount([FromBody]UserReturnModel user)
         {
-            var email = HttpContext.User.Claims.Where( c => c.Type == ClaimTypes.Email)
+            var email = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Email)
                 .Select(c => c.Value).SingleOrDefault();
             var sessionUser = _db.GetUserByEmail(email);
 
             if (sessionUser.Id == user.Id)
             {
-                return _db.ChangeUserPassword(user);
+                return _db.UpdateUser(user);
             }
+            return null;
         }
-        return "How did you even get here?";
-    }
 
-    // [Authorize]
-    // [HttpGet("favs")]
+        [Authorize]
+        [HttpPut("change-password")]
 
-    // public IEnumerable<Post> GetUserFavs(){
-    //     var user = HttpContext.User.Identity.Name;
-    //     return _db.GetUserFavs(user);
-    // }
+        public string ChangePassword([FromBody]ChangeUserPasswordModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var email = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Email)
+                    .Select(c => c.Value).SingleOrDefault();
+                var sessionUser = _db.GetUserByEmail(email);
 
-    //     [Authorize]
-    //     [HttpPost("favs/{postId}")]
-    //     public string AddFav(int postId){
-    //         bool success = _db.AddFav(postId, HttpContext.User.Identity.Name);
-    //         if(success){
-    //             return "FAV ADDED!";
-    //         }
-    //         return "FAILED TO ADD";
-    //     }
+                if (sessionUser.Id == user.Id)
+                {
+                    return _db.ChangeUserPassword(user);
+                }
+            }
+            return "How did you even get here?";
+        }
+
+        [Authorize]
+        [HttpDelete]
+        public async Task<string> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return "succesfully logged out";
+        }
+
 
     }
 

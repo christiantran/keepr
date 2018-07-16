@@ -10,20 +10,21 @@
 -- );
 
 
--- DROP TABLE keeps;
-
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     authorId VARCHAR(255) NOT NULL,
+--     img VARCHAR (255) NOT NULL,
+--     views int,
+--     keeps int,
+--     privatepublic tinyint(1),
+--     authorId VARCHAR(255),
 --     INDEX authorId (authorId),
 --     FOREIGN KEY (authorId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
-
 
 -- DROP TABLE vaults;
 
@@ -40,19 +41,17 @@
 -- );
 
 
--- DROP TABLE vaultkeeps;
-
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     vaultId int NOT NULL,
 --     keepId int NOT NULL,
---     userId VARCHAR(255) NOT NULL,
+--     authorId VARCHAR(255) NOT NULL,
 
 --     PRIMARY KEY (id),
 --     INDEX (vaultId, keepId),
---     INDEX (userId),
+--     INDEX (authorId),
 
---     FOREIGN KEY (userId)
+--     FOREIGN KEY (authorId)
 --         REFERENCES users(id)
 --         ON DELETE CASCADE,
 
@@ -66,8 +65,6 @@
 -- )
 
 
--- USE THIS LINE FOR GET KEEPS BY VAULTID
-
 -- SELECT * FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = 2)
@@ -78,33 +75,19 @@
 -- DELETE FROM users WHERE id = 1
 
 
--- CREATE TABLE posts (
+-- CREATE TABLE userfavs (
 --   id int NOT NULL AUTO_INCREMENT,
---   body VARCHAR(255),
---   title VARCHAR(255) NOT NULL,
+--   postId int NOT NULL,
 --   authorId VARCHAR(255) NOT NULL,
 
 --   PRIMARY KEY (id),
 --   INDEX (authorId),
 
---   FOREIGN KEY (authorId)
---     REFERENCES users(id)
--- );
-
-
--- CREATE TABLE userfavs (
---   id int NOT NULL AUTO_INCREMENT,
---   postId int NOT NULL,
---   userId VARCHAR(255) NOT NULL,
-
---   PRIMARY KEY (id),
---   INDEX (userid),
-
 --   FOREIGN KEY (postId)
 --     REFERENCES posts(id)
 --     ON DELETE CASCADE,
 
---   FOREIGN KEY (userId)
+--   FOREIGN KEY (authorId)
 --     REFERENCES users(id)
 --     ON DELETE CASCADE
 -- );

@@ -120,7 +120,7 @@ namespace keepr.Repositories
         }
 
 
-    // internal IEnumerable<Keept> GetUserFavs(string id)
+    // internal IEnumerable<Post> GetUserFavs(string id)
     // {
     //   return _db.Query<Keep>(@"
     //   SELECT * FROM userfavs uf
