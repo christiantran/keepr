@@ -64,8 +64,7 @@
         </div>
 
         <h1 class="Title">keepr</h1>
-
-
+        
       </div>
     </div>
     
@@ -75,79 +74,78 @@
 
 
 <script>
-  import router from '../router'
-  export default {
-    name: 'Home',
-    components: {
-    },
-    data() {
-      return {
-        login: {
-          username: '',
-          password: ''
-        },
-        register: {
-          username: '',
-          email: '',
-          password: '',
-        },
-      }
-    },
-    mounted(){
-      if(!this.$store.state.user._id){
-        this.$store.dispatch('authenticate')
-      }
-    },
-    computed: {
-    },
-    methods: {
-      userLogin() {
-        this.$store.dispatch('login', this.login)
+import router from "../router";
+export default {
+  name: "Home",
+  data() {
+    return {
+      login: {
+        username: "",
+        password: ""
       },
-      userRegister() {
-        this.$store.dispatch('register', this.register)
-      },
+      register: {
+        username: "",
+        email: "",
+        password: ""
+      }
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getKeeps");
+  },
 
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
+
+  methods: {
+    userLogin() {
+      this.$store.dispatch("login", this.login);
+    },
+    userRegister() {
+      this.$store.dispatch("register", this.register);
     }
   }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .fullscreen{
-    height: 100vh;
-  }
-  .main-top-style {
-    background-color: rgb(255, 0, 0);
-    color: white;
-    height: 70vh;
-    /* border-bottom: 2px solid black; */
-  }
-  .main-bottom-style {
-    background-color: rgb(255, 0, 0);
-    height: 30vh;
-    /* padding: auto; */
-    
-  }
-  .Title {
-    font-family: 'Palanquin Dark', sans-serif;
-    color: #fff9e0;
-    text-shadow: 2px 2px black;
-    padding-top: 4px
-  }
-  .trucklogo{
-    border-radius: 10%;  
-  }
-  .foodtruck{
-    margin-top: 3rem;
-  }
-  .btnwidth{
-    padding: 5% 20% 5% 20%;
-  }
-  .btnwidth2{
-    padding: 2% 10% 2% 10%
-  }
-  .spinner{
-    color: #fff9e0;
-  }
+.fullscreen {
+  height: 100vh;
+}
+.main-top-style {
+  background-color: rgb(255, 0, 0);
+  color: white;
+  height: 70vh;
+  /* border-bottom: 2px solid black; */
+}
+.main-bottom-style {
+  background-color: rgb(255, 0, 0);
+  height: 30vh;
+  /* padding: auto; */
+}
+.Title {
+  font-family: "Palanquin Dark", sans-serif;
+  color: #fff9e0;
+  text-shadow: 2px 2px black;
+  padding-top: 4px;
+}
+.trucklogo {
+  border-radius: 10%;
+}
+.foodtruck {
+  margin-top: 3rem;
+}
+.btnwidth {
+  padding: 5% 20% 5% 20%;
+}
+.btnwidth2 {
+  padding: 2% 10% 2% 10%;
+}
+.spinner {
+  color: #fff9e0;
+}
 </style>

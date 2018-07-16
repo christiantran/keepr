@@ -122,7 +122,7 @@ namespace keepr.Repositories
 
     // internal IEnumerable<Post> GetUserFavs(string id)
     // {
-    //   return _db.Query<Keep>(@"
+    //   return _db.Query<Post>(@"
     //   SELECT * FROM userfavs uf
     //   INNER JOIN posts p ON p.id = uf.postId 
     //   WHERE (userId = @id)", new{id});

@@ -4,7 +4,7 @@ import axios from 'axios'
 import router from "../router"
 
 var production = !window.location.host.includes('localhost');
-var baseUrl = production ? '' : '//localhost:5000/';
+var baseUrl = production ? '//keepr2h.herokuapp.com' : '//localhost:5000/';
 
 
 var api = axios.create({
@@ -23,64 +23,99 @@ vue.use(vuex)
 export default new vuex.Store({
   state: {
     user: {},
+    keeps: {},
+    vaults: []
   },
 
   mutations: {
     setUser(state, user) {
       state.user = user
     },
-    deleteUser(state) {
-      state.user = {}
+    addKeep(state, keep) {
+      state.keeps = []
     },
-
+    setKeeps(state, payload) {
+      state.keeps = payload
+    },
+    addVault(state, vault) {
+      state.vaults = []
+    },
+    setVaults(state, payload) {
+      state.vaults = payload
+    },
   },
 
   actions: {
-
-    login({ commit, dispatch }, loginCredentials) {
+    // AUTH
+    login({ commit }, loginCredentials) {
       auth.post('login', loginCredentials)
         .then(res => {
-          console.log("Successfully logged in!")
-          console.log(res.data)
+          console.log('Successfully logged in')
           commit('setUser', res.data)
-          router.push({ name: 'Home' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-
-    logout({ commit, dispatch }) {
-      auth.delete('')
-        .then(res => {
-          console.log("Successfully logged out!")
-          commit('deleteUser')
-          router.push({ name: 'Login' })
-        })
-        .catch(err => {
-          console.log(err)
+          router.push({ name: 'Profile' })
         })
     },
 
     register({ commit, dispatch }, userData) {
       auth.post('register', userData)
-        .then(res => {
-          console.log("Registration Successful")
-          router.push({ name: 'Login' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then(res => {
+        console.log('Successfully registered')
+        commit('setUser', res.data)
+        router.push({ name: 'login' })
+      })
     },
-
+    
     authenticate({ commit, dispatch }) {
       auth.get('authenticate')
-        .then(res => {
-          commit('setUser', res.data)
-          router.push({ name: 'Home' })
-        })
-
+      .then(res => {
+        commit('setUser', res.data)
+        router.push({ name: 'Home' })
+      })
+      .catch(res => {
+        console.log(res.data)
+      })
     },
+
+    //   logout({ commit, dispatch }) {
+    //     auth.delete('')
+    //         .then(res => {
+    //             console.log('You have successfully logged out')
+    //             commit('deleteUser')
+    //             router.push({ name: 'login' })
+    //         })
+    // },
+
+    // KEEPS
+    addKeep({ dispatch, commit }, keep) {
+      api.post('/keeps', keep)
+        .then(res => {
+          dispatch('getKeeps')
+        })
+    },
+
+    getKeeps({ commit, dispatch }) {
+      api.get('/keeps')
+        .then(res => {
+          commit('setKeeps', res.data)
+        })
+    },
+
+    // VAULTS
+    addVault({ dispatch, commit }, vault) {
+      api.post('/vault', vault)
+        .then(res => {
+          dispatch('getvaults')
+        })
+    },
+
+    getVaults({ commit, dispatch }) {
+      api.get('/vaults')
+        .then(res => {
+          commit('setvaults', res.data)
+        })
+    },
+
+
 
 
 

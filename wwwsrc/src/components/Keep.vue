@@ -52,11 +52,6 @@
     //         deleteKeep(keep) {
     //             this.$store.dispatch('deleteKeep', keep)
     //         },
-    //         // createComment(task) {
-    //         //     this.comment.parentId = task._id
-    //         //     this.$store.dispatch('createComment', this.comment)
-    //         //     this.comment = { body: '', parentId: '' }
-    //         // },
     //         moveKeep(keep) {
     //             keep.parentId = this.selected
     //             this.$store.dispatch('moveKeep', keep)
