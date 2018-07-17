@@ -31,13 +31,13 @@ namespace keepr.Repositories
     }
 
     // GET BY AUTHOR
-    public IEnumerable<Vault> GetbyAuthorId(int id)
+    public IEnumerable<Vault> GetbyAuthorId(string id)
     {
       return _db.Query<Vault>("SELECT * FROM vaults WHERE authorId = @id;", new { id });
     }
 
     // GET BY ID
-    public Vault GetbyVaultId(int id)
+    public Vault GetbyVaultId(string id)
     {
       return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults WHERE id = @id;", new { id });
     }
@@ -60,7 +60,7 @@ namespace keepr.Repositories
     }
 
     // DELETE VAULT
-    public bool DeletVault(int id)
+    public bool DeleteVault(int id, string authorId)
     {
       var i = _db.Execute(@"
       DELETE FROM vaults

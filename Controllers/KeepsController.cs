@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace keepr.Controllers
 {
     [Route("api/[controller]")]
-    public class KeepController : Controller
+    public class KeepsController : Controller
     {
         private readonly KeepRepository _db;
 
-        public KeepController(KeepRepository repo)
+        public KeepsController(KeepRepository repo)
         {
             _db = repo;
         }
@@ -38,7 +38,7 @@ namespace keepr.Controllers
 
         //GET BY ID
         [HttpGet("{id}")]
-        public Keep GetById(int id)
+        public Keep GetById(string id)
         {
             return _db.GetbyKeepId(id);
         }
@@ -50,25 +50,30 @@ namespace keepr.Controllers
             return _db.GetbyAuthorId(id);
         }
 
-        //EDIT KEEP
-        [HttpPut("{id}")]
-        public Keep EditKeep(int id, [FromBody]Keep newKeep)
-        {
-            return _db.EditKeep(id, newKeep);
-        }
+        // //EDIT KEEPS
+        // [HttpPut("{id}")]
+        // public Vault EditKeep(int id, [FromBody]Keep editKeep)
+        // {
+        //     return _db.EditKeep(id, editKeep);
+        //     // if (ModelState.IsValid)
+        //     // {
+        //     //     return _db.EditVault(id, editVault);
+        //     // }
+        //     // return null;
+        // }
 
-        //DELETE KEEP
-        [HttpDelete("{id}")]
-        [Authorize]
-        public string DeleteKeep(int id)
-        {
-            var user = HttpContext.User.Identity.Name;
-            bool delete = _db.DeleteKeep(id);
-            if (delete)
-            {
-                return "Successfully Deleted";
-            }
-            return "Try again";
-        }
+        // // DELETE VAULT
+        // [HttpDelete("{id}")]
+        // [Authorize]
+        // public string DeleteVault(int id)
+        // {
+        //     var user = HttpContext.User.Identity.Name;
+        //     bool delete = _db.DeleteVault(id, user);
+        //     if (delete)
+        //     {
+        //         return "Successfully Deleted";
+        //     }
+        //     return "Try again";
+        // }
     }
 }

@@ -9,7 +9,7 @@
 --     UNIQUE KEY email (email)
 -- );
 
-
+-- DROP TABLE keeps;
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
 --     name VARCHAR(20) NOT NULL,
@@ -17,7 +17,7 @@
 --     img VARCHAR (255) NOT NULL,
 --     views int,
 --     keeps int,
---     privatepublic tinyint(1),
+--     public tinyint(1),
 --     authorId VARCHAR(255),
 --     INDEX authorId (authorId),
 --     FOREIGN KEY (authorId)

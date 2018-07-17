@@ -1,20 +1,20 @@
 <template>
     <div>
         <ul>
-            <!-- <li v-for="keep in vault"> -->
-                <h3 class="keep-body">{{keep.body}}</h3>
+            <li v-for="keep in vault">
+                <h3>{{keep.body}}</h3>
                 <select v-model="selected" @change="moveKeep(keep)">
                     <option disabled value="">Move to Vault:</option>
-                    <!-- <option v-for="vault in vaults" v-if="keep.parentId!=vault._id" v-bind:value="keep._id">{{vault.title}}</option> -->
+                    <option v-for="vault in vaults" v-if="keep.parentId!=vault._id" v-bind:value="keep._id">{{vault.title}}</option>
                 </select>
                 <button @click="deleteKeep(keep)">Delete Keep</button>
-            <!-- </li> -->
+            </li>
         </ul>
     </div>
 </template>
 
 <script>
-import router from '../router'
+import router from "../router";
 export default {
   name: "Keeps",
   data() {
@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    setVault(keep) {
+    setKeep(keep) {
       this.$store.dispatch("setKeep", keep);
     },
     deleteKeep(keep) {

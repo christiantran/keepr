@@ -9,7 +9,7 @@ namespace keepr.Models
         public string Img { get; set; }
         public int views {get; set;}
         public int keeps {get; set;}
-        public int privatepublic {get; set;}
+        public int Public {get; set;}
         public string AuthorId { get; set; }
         
     }

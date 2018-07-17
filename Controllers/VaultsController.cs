@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace keepr.Controllers
 {
     [Route("api/[controller]")]
-    public class VaultController : Controller
+    public class VaultsController : Controller
     {
         private readonly VaultRepository _db;
 
-        public VaultController(VaultRepository repo)
+        public VaultsController(VaultRepository repo)
         {
             _db = repo;
         }
@@ -38,27 +38,42 @@ namespace keepr.Controllers
 
         //GET BY ID
         [HttpGet("{id}")]
-        public Vault GetById(int id)
+        public Vault GetById(string id)
         {
             return _db.GetbyVaultId(id);
         }
 
         //GET BY AUTHOR
         [HttpGet("author/{id}")]
-        public IEnumerable<Vault> GetByAuthorId(int id)
+        public IEnumerable<Vault> GetByAuthorId(string id)
         {
             return _db.GetbyAuthorId(id);
         }
 
         //EDIT VAULT
         [HttpPut("{id}")]
-        public Vault EditVault(int id, [FromBody]Vault editVault)
+        public Vault EditVault(int id, [FromBody]Vault newVault)
         {
-            if (ModelState.IsValid)
+            return _db.EditVault(id, newVault);
+            // if (ModelState.IsValid)
+            // {
+            //     return _db.EditVault(id, editVault);
+            // }
+            // return null;
+        }
+
+        // DELETE VAULT
+        [HttpDelete("{id}")]
+        [Authorize]
+        public string DeleteVault(int id)
+        {
+            var user = HttpContext.User.Identity.Name;
+            bool delete = _db.DeleteVault(id, user);
+            if (delete)
             {
-                return _db.EditVault(id, editVault);
+                return "Successfully Deleted";
             }
-            return null;
+            return "Try again";
         }
     }
 }

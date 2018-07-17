@@ -54,50 +54,30 @@ export default new vuex.Store({
   actions: {
     // AUTH
 
-    // login({ commit }, loginCredentials) {
-    //   auth.post('login', loginCredentials)
-    //     .then(res => {
-    //       console.log('Successfully logged in')
-    //       commit('setUser', res.data)
-    //       router.push({ name: 'Profile' })
-    //     })
-    // },
-
     login({ commit }, loginCredentials) {
       auth.post('login', loginCredentials)
         .then(res => {
           console.log('Successfully logged in')
           console.log(res.data)
           commit('setUser', res.data.data)
-          router.push({ name: 'Home' })
+          router.push({ name: 'Profile' })
         })
     },
 
-    register({ commit, dispatch }, userData) {
+    register({ commit }, userData) {
       auth.post('register', userData)
         .then(res => {
           console.log('Successfully registered')
           commit('setUser', res.data)
-          router.push({ name: 'Home' })
-          dispatch(res.data)
+          router.push({ name: 'Profile' })
         })
     },
 
-    // register({ commit }, userData) {
-    //   console.log(userData)
-    //   auth.post('register', userData)
-    //     .then(res => {
-    //       commit('setUser', res.data)
-    //       router.push({ name: 'Profile' })
-    //     })
-    // },
-
-    authenticate({ commit, dispatch }) {
+    authenticate({ commit}) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'Home' })
-          dispatch(res.data)
+          router.push({ name: 'Profile' })
         })
         .catch(res => {
           console.log(res.data)
@@ -114,45 +94,33 @@ export default new vuex.Store({
     // },
 
     // KEEPS
-    addKeep({ dispatch }, keep) {
-      api.post('/keeps', keep)
+    addKeep({ commit, dispatch }, keep) {
+      api.post('api/keeps', keep)
         .then(res => {
-          dispatch('getKeeps')
+          // dispatch('getKeeps')
+          commit("setKeeps", res.data)
         })
     },
 
-    getKeeps({ commit }) {
-      api.get('/keeps')
+    getKeeps({ commit, dispatch }) {
+      api.get('api/keeps')
         .then(res => {
           commit('setKeeps', res.data)
         })
     },
 
-    // viewBoard({ commit, dispatch, state }, boardId) {
-    //   api.get('/boards/' + boardId)
-    //     .then(res => {
-    //       commit('setActiveBoard', res.data)
-    //     })
-    // },
-    // viewTruck({ commit }, id) {
-    //   api.get('api/trucks/' + id)
-    //     .then(res => {
-    //       commit('setActiveTruck', res.data)
-    //     })
-    // },
-
     // VAULTS
-    addVault({ dispatch }, vault) {
-      api.post('/vault', vault)
+    addVault({ commit, dispatch }, vault) {
+      api.post('api/vaults/', vault)
         .then(res => {
-          dispatch('getvaults')
+          commit('setVaults', res.data)
         })
     },
 
-    getVaults({ commit }) {
-      api.get('/vaults')
+    getVaults({ commit, dispatch }) {
+      api.get('api/vaults')
         .then(res => {
-          commit('setvaults', res.data)
+          commit('setVaults', res.data)
         })
     },
 

@@ -36,16 +36,7 @@ namespace keepr.Controllers
             return _db.GetbyAuthorId(id);
         }
 
-        // [HttpPut("{id}")]
-        // [Authorize]
-        // public Vault EditVaultKeep(int id, [FromBody]VaultKeep editVaultKeep)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         return _db.EditVaultKeep(id, editVaultKeep);
-        //     }
-        //     return null;
-        // }
+
 
 
     }

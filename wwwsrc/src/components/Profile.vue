@@ -9,15 +9,29 @@
             <button type="submit">Add Keep</button>
          </form>
       </div>
+    <div>
+      <div v-for="k in keeps" :key="k.id">
+        {{k.name}}
+        {{k.description}}
+        <img :src="k.img" alt="">
+      </div>
+    </div>
 
         
 <!-- ADD VAULT -->
         <div>
-         <!-- <div v-for="vault in vaults" class="vaults"> -->
-            <button @click="vaultSection(vault)">{{vault.name}}</button>
-            <button @click="deleteVault(vault)">Delete vault</button>
-         </div>
-        <!-- </div> -->
+         <form @submit.prevent="addVault">
+            <input type="text" name="title" v-model="vault.name" placeholder="Vault Name">
+            <input type="text" name="description" v-model="vault.description" placeholder="Description">
+            <button type="submit">Add Vault</button>
+         </form>
+      </div>
+    <div>
+      <div v-for="v in vaults" :key="v.id">
+        {{v.name}}
+        {{v.description}}
+      </div>
+    </div>
     </div>
 </template>
 
@@ -42,8 +56,9 @@ export default {
   components: {},
   mounted() {
     if (this.$store.state.user.id) {
-      this.$store.dispatch("getKeeps");
+      // this.$store.dispatch("getVaults", this.$store.state.user)
     }
+    this.$store.dispatch("getKeeps");
   },
 
   computed: {
