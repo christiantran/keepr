@@ -53,7 +53,6 @@ export default {
       }
     };
   },
-  components: {},
   mounted() {
     this.$store.dispatch("getKeeps");
     this.$store.dispatch("getVaults", this.user.id);

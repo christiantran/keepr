@@ -29,11 +29,12 @@ namespace keepr.Repositories
         // GET ALL KEEPS
         public IEnumerable<Keep> GetAll()
         {
-            return _db.Query<Keep>("SELECT * FROM keeps;");
+            var keeps = _db.Query<Keep>("SELECT * FROM keeps;");
+            return keeps;
         }
 
         // GET BY AUTHOR
-        public IEnumerable<Keep> GetbyAuthorId(string id)
+        internal IEnumerable<Keep> GetbyAuthorId(string id)
         {
             return _db.Query<Keep>("SELECT * FROM keeps WHERE authorId = @id;", new { id });
         }
@@ -71,7 +72,7 @@ namespace keepr.Repositories
         }
 
         // DELETE KEEP
-        public bool DeleteKeep(int id, string user)
+        internal bool DeleteKeep(int id, string user)
         {
             var i = _db.Execute(@"
       DELETE FROM keeps

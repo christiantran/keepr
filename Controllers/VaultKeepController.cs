@@ -15,7 +15,7 @@ namespace keepr.Controllers
             _db = repo;
         }
 
-        // CREATE VAULT
+        // CREATE VAULT KEEP
         [HttpPost]
         [Authorize]
         public VaultKeep CreateVaultKeep([FromBody]VaultKeep newVaultKeep)
@@ -29,14 +29,33 @@ namespace keepr.Controllers
             return null;
         }
 
-        // GET BY AUTHOR
-        [HttpGet("author/{id}")]
-        public IEnumerable<VaultKeep> GetByAuthorId(int id)
+        // // GET BY AUTHOR
+        // [HttpGet("author/{id}")]
+        // public IEnumerable<VaultKeep> GetByAuthorId(int id)
+        // {
+        //     return _db.GetbyAuthorId(id);
+        // }
+
+        // GET BY ID
+        [HttpGet("{id}")]
+        public IEnumerable<Keep> GetKeepsInVault(int id)
         {
-            return _db.GetbyAuthorId(id);
+            return _db.GetKeepsInVault(id);
         }
 
-
+        // DELETE VAULT KEEP
+        [HttpDelete("{id}")]
+        [Authorize]
+        public string DeleteVaultKeep(int id)
+        {
+            var user = HttpContext.User.Identity.Name;
+            bool delete = _db.DeleteVaultKeep(id, user);
+            if (delete)
+            {
+                return "Successfully Deleted";
+            }
+            return "Try again";
+        }
 
 
     }

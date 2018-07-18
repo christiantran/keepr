@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System;
 using System.Data;
 using keepr.Models;
 using Dapper;
+using keepr.Repositories;
 
 namespace keepr.Repositories
 {
@@ -13,15 +15,15 @@ namespace keepr.Repositories
     }
 
     // CREATE VAULT
-    public Vault CreateVault(Vault newVault)
+    public Vault CreateVault(Vault vault)
     {
       int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO vaults (name, description, authorId)
                 VALUES (@Name, @Description, @AuthorId);
                 SELECT LAST_INSERT_ID();
-            ", newVault);
-      newVault.Id = id;
-      return newVault;
+            ", vault);
+      vault.Id = id;
+      return vault;
     }
 
     // GET ALL VAULTS
@@ -37,25 +39,25 @@ namespace keepr.Repositories
     }
 
     // GET BY ID
-    public Vault GetbyVaultId(string id)
+    internal Vault GetbyVaultId(string id)
     {
       return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults WHERE id = @id;", new { id });
     }
 
     // EDIT VAULT
-    public Vault EditVault(int id, Vault vault)
+    public Vault EditVault(int id, Vault edit)
     {
-      vault.Id = id;
+      edit.Id = id;
       var i = _db.Execute(@"
                 UPDATE vaults SET
                     name = @Name,
                     description = @Description
-                    authorId = @AuthorId
                 WHERE id = @Id
-            ", vault);
+                AND authorId = @AuthorId;
+            ", edit);
       if (i > 0)
       {
-        return vault;
+        return edit;
       }
       return null;
     }
@@ -66,6 +68,7 @@ namespace keepr.Repositories
       var i = _db.Execute(@"
       DELETE FROM vaults
       WHERE id = @id
+      AND authorId = @authorId
       LIMIT 1;
       ", new { id });
       if (i > 0)

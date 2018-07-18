@@ -86,20 +86,20 @@ export default new vuex.Store({
         })
     },
 
-    //   logout({ commit, dispatch }) {
-    //     auth.delete('')
-    //         .then(res => {
-    //             console.log('You have successfully logged out')
-    //             commit('deleteUser')
-    //             router.push({ name: 'login' })
-    //         })
-    // },
+    logout({ commit, dispatch }) {
+      auth.delete('')
+        .then(res => {
+          console.log('You have successfully logged out')
+          commit('deleteUser')
+          router.push({ name: 'login' })
+        })
+    },
 
     // KEEPS
     addKeep({ commit, dispatch }, keep) {
       api.post('/keeps', keep)
         .then(res => {
-          dispatch('getKeeps')
+          dispatch('getKeeps', res.data)
           // commit("setKeeps", res.data)
         })
     },
@@ -111,8 +111,23 @@ export default new vuex.Store({
         })
     },
 
+    editKeep({ commit, dispatch }, keep) {
+      api.put('/keeps/' + keep.id, keep)
+        .then(res => {
+          dispatch('getKeeps')
+        })
+    },
+
+    deleteKeep({ commit, dispatch, state }, keep) {
+      api.delete('/keeps/' + keep._id, keep)
+        .then(res => {
+          commit("deleteKeep", res.data)
+          dispatch('getKeeps')
+        })
+    },
+
     // VAULTS
-    addVault({ commit, dispatch}, vault) {
+    addVault({ commit, dispatch }, vault) {
       api.post('/vaults', vault)
         .then(res => {
           // commit('setVaults', res.data)
@@ -120,14 +135,47 @@ export default new vuex.Store({
         })
     },
 
-    getVaults({ commit, dispatch }) {
-      api.get('/vaults')
+    // getVaults({ commit, dispatch }) {
+    //   api.get('/vaults')
+    //     .then(res => {
+    //       commit('setVaults', res.data)
+    //     })
+    // },
+    getVaults({ commit, dispatch, state }, userid) {
+      api.get('/vault/author/' + userid)
         .then(res => {
           commit('setVaults', res.data)
         })
     },
 
+    viewVault({ commit, dispatch, state }, vault) {
+      api.get('/vaults/' + vault.id, vault)
+        .then(res => {
+          commit('setVaults', res.data)
+        })
+    },
 
+    editVault({ commit, dispatch }, vault) {
+      api.put('/vaults/' + vault.id, vault)
+        .then(res => {
+          dispatch('getVaults')
+        })
+    },
+
+    deleteVault({ commit, dispatch, state }, vault) {
+      api.delete('/vaults/' + vault._id, vault)
+        .then(res => {
+          commit("deleteVault", res.data)
+          dispatch('getvaults')
+        })
+    },
+
+    // VAULT KEEPS
+    addVaultKeep({ dispatch, commit }, vaultkeep) {
+      api.post('/vaultkeep', vaultkeep)
+        .then(res => {
+        })
+    },
 
 
   }

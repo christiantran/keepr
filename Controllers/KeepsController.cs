@@ -16,14 +16,25 @@ namespace keepr.Controllers
             _db = repo;
         }
 
+        // [HttpPost]
+        // [Authorize]
+        // public Keep CreateKeep([FromBody]Keep newKeep)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         var user = HttpContext.User;
+        //         newKeep.AuthorId = user.Identity.Name;
+        //         return _db.CreateKeep(newKeep);
+        //     }
+        //     return null;
+        // }
+
         [HttpPost]
-        [Authorize]
-        public Keep CreateKeep([FromBody]Keep newKeep)
+        public Keep CreateKeep(int id, [FromBody]Keep newKeep)
         {
             if (ModelState.IsValid)
             {
-                var user = HttpContext.User;
-                newKeep.AuthorId = user.Identity.Name;
+                newKeep.AuthorId = HttpContext.User.Identity.Name;
                 return _db.CreateKeep(newKeep);
             }
             return null;
@@ -50,6 +61,7 @@ namespace keepr.Controllers
             return _db.GetbyAuthorId(id);
         }
 
+        //GET BY VAULT ID
         [HttpGet("vault/{id}")]
         [Authorize]
         public IEnumerable<Keep> GetByVaultId(int id)

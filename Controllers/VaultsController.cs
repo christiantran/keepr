@@ -16,6 +16,7 @@ namespace keepr.Controllers
             _db = repo;
         }
 
+        //CREATE VAULT
         [HttpPost]
         [Authorize]
         public Vault CreateVault([FromBody]Vault newVault)
@@ -52,14 +53,14 @@ namespace keepr.Controllers
 
         //EDIT VAULT
         [HttpPut("{id}")]
-        public Vault EditVault(int id, [FromBody]Vault newVault)
+        public Vault EditVault(int id, [FromBody]Vault editVault)
         {
-            return _db.EditVault(id, newVault);
-            // if (ModelState.IsValid)
-            // {
-            //     return _db.EditVault(id, editVault);
-            // }
-            // return null;
+            //return _db.EditVault(id, newVault);
+            if (ModelState.IsValid)
+            {
+                return _db.EditVault(id, editVault);
+            }
+            return null;
         }
 
         // DELETE VAULT
