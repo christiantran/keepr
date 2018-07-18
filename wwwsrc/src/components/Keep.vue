@@ -20,8 +20,9 @@ export default {
   data() {
     return {
       keep: {
-        body: "",
-        parentId: ""
+        name: "",
+        description: "",
+        img: ""
       }
     };
   },
@@ -35,12 +36,18 @@ export default {
     },
     keeps() {
       return this.$store.state.keeps;
+    },
+    vaults() {
+      return this.$store.state.vaults;
     }
   },
   methods: {
-    setKeep(keep) {
-      this.$store.dispatch("setKeep", keep);
+    addKeep() {
+      this.$store.dispatch("addKeep", this.keep)
     },
+    // setKeep(keep) {
+    //   this.$store.dispatch("setKeep", keep);
+    // },
     deleteKeep(keep) {
       this.$store.dispatch("deleteKeep", keep);
     },

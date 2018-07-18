@@ -1,36 +1,29 @@
 <template>
-  <div>
     <div>
-      <h1 class="vault-title">{{vault.name}}</h1>
+        <div>
+            <!-- <li v-for="keep in vault"> -->
+                <h3>{{keep.body}}</h3>
+                <button @click="deleteKeep(keep)">Delete Keep</button>
+        </div>
     </div>
-
-    <div v-for="keep in keeps[vault._id]">
-      <h2>{{keep.name}}</h2>
-      <div>
-        <button @click="deleteKeep(keep)">Delete Keep</button>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
   import router from "../router";
-  import keep from "./Keep";
+  // import keep from "./Keep";
   export default {
     name: "Vaults",
-    components: {
-      keep
-    },
     data() {
       return {
-        keep: {
+        vault: {
           name: "",
-          parentId: ""
+          description: "",
         }
       };
     },
+    components: {},
     mounted() {
-      this.$store.dispatch("getKeeps", this.vault._id);
+      this.$store.dispatch("getVaults");
     },
     computed: {
       user() {
@@ -45,11 +38,11 @@
     },
     methods: {
       addVault() {
-        this.$store.dispatch("addVault", this.newVault);
+        this.$store.dispatch("addVault", this.vault);
       },
-      setVault(vault) {
-        this.$store.dispatch("setVault", vault);
-      },
+      // setVault(vault) {
+      //   this.$store.dispatch("setVault", vault);
+      // },
       deleteVault(vault) {
         this.$store.dispatch("deleteVault", vault);
       },

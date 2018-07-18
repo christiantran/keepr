@@ -39,6 +39,7 @@
 import router from "../router";
 export default {
   name: "Profile",
+  components: {},
   data() {
     return {
       keep: {
@@ -48,17 +49,14 @@ export default {
       },
       vault: {
         name: "",
-        description: "",
-        authorId: ""
+        description: ""
       }
     };
   },
   components: {},
   mounted() {
-    if (this.$store.state.user.id) {
-      // this.$store.dispatch("getVaults", this.$store.state.user)
-    }
     this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getVaults", this.user.id);
   },
 
   computed: {

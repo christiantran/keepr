@@ -50,30 +50,37 @@ namespace keepr.Controllers
             return _db.GetbyAuthorId(id);
         }
 
-        // //EDIT KEEPS
-        // [HttpPut("{id}")]
-        // public Vault EditKeep(int id, [FromBody]Keep editKeep)
-        // {
-        //     return _db.EditKeep(id, editKeep);
-        //     // if (ModelState.IsValid)
-        //     // {
-        //     //     return _db.EditVault(id, editVault);
-        //     // }
-        //     // return null;
-        // }
+        [HttpGet("vault/{id}")]
+        [Authorize]
+        public IEnumerable<Keep> GetByVaultId(int id)
+        {
+            return _db.GetByVaultId(id);
+        }
 
-        // // DELETE VAULT
-        // [HttpDelete("{id}")]
-        // [Authorize]
-        // public string DeleteVault(int id)
-        // {
-        //     var user = HttpContext.User.Identity.Name;
-        //     bool delete = _db.DeleteVault(id, user);
-        //     if (delete)
-        //     {
-        //         return "Successfully Deleted";
-        //     }
-        //     return "Try again";
-        // }
+        // //EDIT KEEPS
+        [HttpPut("{id}")]
+        public Keep EditKeep(int id, [FromBody]Keep editKeep)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = HttpContext.User.Identity.Name;
+                return _db.EditKeep(id, editKeep, user);
+            }
+            return null;
+        }
+
+        // DELETE KEEP
+        [HttpDelete("{id}")]
+        [Authorize]
+        public string DeleteKeep(int id)
+        {
+            var user = HttpContext.User.Identity.Name;
+            bool delete = _db.DeleteKeep(id, user);
+            if (delete)
+            {
+                return "Successfully Deleted";
+            }
+            return "Try again";
+        }
     }
 }

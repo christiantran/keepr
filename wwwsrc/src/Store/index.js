@@ -37,14 +37,14 @@ export default new vuex.Store({
     deleteKeep(state) {
       state.keeps = {}
     },
-    setKeeps(state, payload) {
-      state.keeps = payload
+    setKeeps(state, keeps) {
+      state.keeps = keeps
     },
     addVault(state, vault) {
       state.vaults = vault
     },
-    setVaults(state, payload) {
-      state.vaults = payload
+    setVaults(state, vaults) {
+      state.vaults = vaults
     },
     deleteVault(state) {
       state.vaults = []
@@ -54,13 +54,14 @@ export default new vuex.Store({
   actions: {
     // AUTH
 
-    login({ commit }, loginCredentials) {
+    login({ commit, dispatch }, loginCredentials) {
       auth.post('login', loginCredentials)
         .then(res => {
           console.log('Successfully logged in')
           console.log(res.data)
-          commit('setUser', res.data.data)
+          commit('setUser', res.data)
           router.push({ name: 'Profile' })
+          dispatch("getVaults", res.data)
         })
     },
 
@@ -73,11 +74,12 @@ export default new vuex.Store({
         })
     },
 
-    authenticate({ commit}) {
+    authenticate({ commit, dispatch }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
           router.push({ name: 'Profile' })
+          dispatch("getVaults", res.data)
         })
         .catch(res => {
           console.log(res.data)
@@ -95,36 +97,35 @@ export default new vuex.Store({
 
     // KEEPS
     addKeep({ commit, dispatch }, keep) {
-      api.post('api/keeps', keep)
+      api.post('/keeps', keep)
         .then(res => {
-          // dispatch('getKeeps')
-          commit("setKeeps", res.data)
+          dispatch('getKeeps')
+          // commit("setKeeps", res.data)
         })
     },
 
     getKeeps({ commit, dispatch }) {
-      api.get('api/keeps')
+      api.get('/keeps')
         .then(res => {
           commit('setKeeps', res.data)
         })
     },
 
     // VAULTS
-    addVault({ commit, dispatch }, vault) {
-      api.post('api/vaults/', vault)
+    addVault({ commit, dispatch}, vault) {
+      api.post('/vaults', vault)
         .then(res => {
-          commit('setVaults', res.data)
+          // commit('setVaults', res.data)
+          dispatch('getvaults')
         })
     },
 
     getVaults({ commit, dispatch }) {
-      api.get('api/vaults')
+      api.get('/vaults')
         .then(res => {
           commit('setVaults', res.data)
         })
     },
-
-
 
 
 

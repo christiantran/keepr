@@ -50,6 +50,7 @@ namespace keepr.Repositories
                 UPDATE vaults SET
                     name = @Name,
                     description = @Description
+                    authorId = @AuthorId
                 WHERE id = @Id
             ", vault);
       if (i > 0)
