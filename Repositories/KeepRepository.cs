@@ -52,7 +52,7 @@ namespace keepr.Repositories
         }
 
         // EDIT KEEP
-        public Keep EditKeep(int id, Keep editKeep, string user)
+        internal Keep EditKeep(int id, Keep editKeep, string user)
         {
             editKeep.Id = id;
             editKeep.AuthorId = user;

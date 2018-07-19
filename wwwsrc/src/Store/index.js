@@ -131,29 +131,29 @@ export default new vuex.Store({
       api.post('/vaults', vault)
         .then(res => {
           // commit('setVaults', res.data)
-          dispatch('getvaults')
+          dispatch('getvaults', res.data)
         })
     },
 
-    // getVaults({ commit, dispatch }) {
-    //   api.get('/vaults')
+    getVaults({ commit, dispatch }) {
+      api.get('/vaults')
+        .then(res => {
+          commit('setVaults', res.data)
+        })
+    },
+    // getVaults({ commit, dispatch, state }, userid) {
+    //   api.get('/vault/author/' + userid)
     //     .then(res => {
     //       commit('setVaults', res.data)
     //     })
     // },
-    getVaults({ commit, dispatch, state }, userid) {
-      api.get('/vault/author/' + userid)
-        .then(res => {
-          commit('setVaults', res.data)
-        })
-    },
 
-    viewVault({ commit, dispatch, state }, vault) {
-      api.get('/vaults/' + vault.id, vault)
-        .then(res => {
-          commit('setVaults', res.data)
-        })
-    },
+    // viewVault({ commit, dispatch, state }, vault) {
+    //   api.get('/vaults/' + vault.id, vault)
+    //     .then(res => {
+    //       commit('setVaults', res.data)
+    //     })
+    // },
 
     editVault({ commit, dispatch }, vault) {
       api.put('/vaults/' + vault.id, vault)

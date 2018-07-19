@@ -14,6 +14,7 @@
         {{k.name}}
         {{k.description}}
         <img :src="k.img" alt="">
+        <button @click="deleteKeep(keep)">Delete Keep</button>
       </div>
     </div>
 
@@ -51,11 +52,12 @@ export default {
         name: "",
         description: ""
       }
+      //viewKeep: {},
     };
   },
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getVaults", this.user.id);
+    this.$store.dispatch("getVaults"); //, this.user.id);
   },
 
   computed: {
@@ -68,6 +70,9 @@ export default {
     vaults() {
       return this.$store.state.vaults;
     }
+    // userVaults() {
+    //   return this.$store.state.userVaults;
+    // }
   },
   methods: {
     deleteKeep(keep) {
@@ -81,11 +86,26 @@ export default {
     addKeep(keep) {
       this.$store.dispatch("addKeep", this.keep);
     },
+    // addToVault() {
+    //   if (!this.vault.id) {
+    //     alert("Please select Vault");
+    //     return;
+    //   }
+    //   this.viewKeep.keeps++;
+    //   this.$store.dispatch("updateKeep", this.viewKeep);
+    //   this.$store.dispatch("addVaultKeep", {
+    //     keepId: this.viewKeep.id,
+    //     vaultId: this.vault.id
+    //   });
+    // },
     deleteVault(vault) {
       this.$store.dispatch("deleteVault", vault);
     },
     addVault(vault) {
       this.$store.dispatch("addVault", this.vault);
+    },
+    logout() {
+      this.$store.dispatch("logout");
     }
   }
 };

@@ -18,7 +18,7 @@ namespace keepr.Controllers
 
         //CREATE VAULT
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public Vault CreateVault([FromBody]Vault newVault)
         {
             if (ModelState.IsValid)
@@ -39,7 +39,7 @@ namespace keepr.Controllers
 
         //GET BY ID
         [HttpGet("{id}")]
-        public Vault GetById(string id)
+        public Vault GetById(int id)
         {
             return _db.GetbyVaultId(id);
         }
@@ -51,17 +51,17 @@ namespace keepr.Controllers
             return _db.GetbyAuthorId(id);
         }
 
-        //EDIT VAULT
-        [HttpPut("{id}")]
-        public Vault EditVault(int id, [FromBody]Vault editVault)
-        {
-            //return _db.EditVault(id, newVault);
-            if (ModelState.IsValid)
-            {
-                return _db.EditVault(id, editVault);
-            }
-            return null;
-        }
+        // //EDIT VAULT
+        // [HttpPut("{id}")]
+        // public Vault EditVault(int id, [FromBody]Vault editVault)
+        // {
+        //     //return _db.EditVault(id, newVault);
+        //     if (ModelState.IsValid)
+        //     {
+        //         return _db.EditVault(id, editVault);
+        //     }
+        //     return null;
+        // }
 
         // DELETE VAULT
         [HttpDelete("{id}")]

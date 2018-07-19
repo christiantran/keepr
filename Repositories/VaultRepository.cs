@@ -15,15 +15,15 @@ namespace keepr.Repositories
     }
 
     // CREATE VAULT
-    public Vault CreateVault(Vault vault)
+    public Vault CreateVault(Vault newVault)
     {
       int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO vaults (name, description, authorId)
                 VALUES (@Name, @Description, @AuthorId);
                 SELECT LAST_INSERT_ID();
-            ", vault);
-      vault.Id = id;
-      return vault;
+            ", newVault);
+      newVault.Id = id;
+      return newVault;
     }
 
     // GET ALL VAULTS
@@ -39,36 +39,36 @@ namespace keepr.Repositories
     }
 
     // GET BY ID
-    internal Vault GetbyVaultId(string id)
+    internal Vault GetbyVaultId(int id)
     {
       return _db.QueryFirstOrDefault<Vault>("SELECT * FROM vaults WHERE id = @id;", new { id });
     }
 
     // EDIT VAULT
-    public Vault EditVault(int id, Vault edit)
+    public Vault EditVault(int id, Vault editVault, string user)
     {
-      edit.Id = id;
+      editVault.Id = id;
+      editVault.AuthorId = user;
       var i = _db.Execute(@"
                 UPDATE vaults SET
                     name = @Name,
                     description = @Description
+                    authorId = @AuthorId;
                 WHERE id = @Id
-                AND authorId = @AuthorId;
-            ", edit);
+            ", editVault);
       if (i > 0)
       {
-        return edit;
+        return editVault;
       }
       return null;
     }
 
     // DELETE VAULT
-    public bool DeleteVault(int id, string authorId)
+    public bool DeleteVault(int id, string user)
     {
       var i = _db.Execute(@"
       DELETE FROM vaults
       WHERE id = @id
-      AND authorId = @authorId
       LIMIT 1;
       ", new { id });
       if (i > 0)
