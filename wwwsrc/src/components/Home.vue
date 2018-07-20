@@ -98,7 +98,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getKeeps");
-    this.$store.dispatch("authenticate", this.login);
+    
   },
 
   computed: {

@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+  <div id="app">
     <router-view/>
   </div>
 </template>
@@ -8,7 +8,9 @@
 export default {
   name: 'App',
   mounted(){
-    // this.$store.dispatch("authenticate")
+    if(!this.$store.user){
+      this.$store.dispatch("authenticate");
+    }
   }
 }
 </script>

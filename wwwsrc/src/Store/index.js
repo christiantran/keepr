@@ -27,7 +27,6 @@ export default new vuex.Store({
     userKeeps: [],
     vaults: [],
     userVaults: [],
-    activeVault: {},
     vaultKeeps: [],
   },
 
@@ -55,9 +54,6 @@ export default new vuex.Store({
     },
     setUserVaults(state, userVaults) {
       state.userVaults = userVaults
-    },
-    setActiveVault(state, vault) {
-      state.activeVault = vault
     },
     deleteVault(state) {
       state.vaults = []

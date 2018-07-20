@@ -1,16 +1,16 @@
 <template>
     <div>
         <div>
-            <!-- <li v-for="keep in vault"> -->
-                <h3>{{keep.body}}</h3>
+            <div v-for="keep in vaultKeeps">
+                <h3>{{keep.name}}</h3>
                 <button @click="deleteKeep(keep)">Delete Keep</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import router from "../router";
-// import keep from "./Keep";
+
 export default {
   name: "Vaults",
   data() {
@@ -21,8 +21,12 @@ export default {
       }
     };
   },
-  components: {},
+  props: ['vaultId'],
+  components: {
+    //vaultKeeps: []
+  },
   mounted() {
+    this.$store.dispatch("getVaults");
     this.$store.dispatch("getVaultKeeps", this.vaultId);
   },
   computed: {
