@@ -24,7 +24,7 @@
               <select v-model="selectedVault">
                 <option disabled value="">Please select Vault</option>
                 <option v-for="v in vaults" :value="v.id" :key="v.id">{{v.name}}</option>
-              </select> 
+              </select>
               <button type="button" @click="addVaultKeep(k)">Move Keep</button>
               <p>
                 <!-- <a href="#" class="btn btn-primary">Delete</a> -->
@@ -49,12 +49,23 @@
           <div v-for="v in vaults" :key="v.id" class="card mt-2">
             <h3 class="card-text">{{v.name}}</h3>
             <h3 class="card-text">{{v.description}}</h3>
-            <div class="container">
-              <p>
-                <!-- <a href="#" class="btn btn-primary">Delete</a> -->
-              </p>
-            </div>
           </div>
+        </div>
+
+<div class="card mt-5" style="width: 18rem;">
+            <div v-for="k in vaultKeeps" :key="k.id" class="card">
+              <h3 class="card-text">{{k.name}}</h3>
+              <h3 class="card-text">{{k.description}}</h3>
+              <div class="container">
+                  <img :src="k.img" alt="">
+                  <!-- <hr>
+                  <p>Views:{{k.views}}</p>
+                  <p>Shares:{{k.shares}}</p> -->
+              </div>
+
+            </div>
+
+
         </div>
       </div>
     </div>
@@ -63,73 +74,71 @@
 </template>
 
 <script>
-  import router from "../router";
-  export default {
-    name: "Profile",
-    components: {},
-    data() {
-      return {
-        keep: {
-          name: "",
-          description: "",
-          img: ""
-        },
-        vault: {
-          name: "",
-          description: ""
-        },
-        selectedVault: "",
-      };
-    },
-    mounted() {
-      this.$store.dispatch("getKeeps");
-      //this.$store.dispatch("getVaults"); //, this.user.id);
-    },
+import router from "../router";
+export default {
+  name: "Profile",
+  components: {},
+  data() {
+    return {
+      keep: {
+        name: "",
+        description: "",
+        img: ""
+      },
+      vault: {
+        name: "",
+        description: ""
+      },
+      selectedVault: ""
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getVaultKeeps");
+    //this.$store.dispatch("getVaults"); //, this.user.id);
+  },
 
-    computed: {
-      user() {
-        return this.$store.state.user;
-      },
-      keeps() {
-        return this.$store.state.keeps;
-      },
-      vaults() {
-        return this.$store.state.userVaults;
-      }
-      // userVaults() {
-      //   return this.$store.state.userVaults;
-      // }
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-    methods: {
-      deleteKeep(keep) {
-        this.$store.dispatch("deleteKeep", keep);
-      },
-      addKeep(keep) {
-        this.$store.dispatch("addKeep", this.keep);
-      },
-      deleteVault(vault) {
-        this.$store.dispatch("deleteVault", vault);
-      },
-      addVault(vault) {
-        this.$store.dispatch("addVault", this.vault);
-      },
-      addVaultKeep(keep) {
-        var keepId = keep.id;
-        var vaultId = this.selectedVault
-        debugger
-        this.$store.dispatch("addVaultKeep", { vaultId, keepId });
-        this.selected = "";
-      },
-      // addVaultKeep(selectedVault, keep){
-      //           keep.oldVaultId = keep.vaultId
-      //           keep.VaultId = selectedVault;
-      //           this.$store.dispatch("addVaultKeep", keep)
-      //       },
-      logout() {
-        this.$store.dispatch("logout");
-      }
+    keeps() {
+      return this.$store.state.keeps;
+    },
+    vaults() {
+      return this.$store.state.userVaults;
+    },
+    vaultKeeps() {
+      return this.$store.state.vaultKeeps;
     }
-  };
+    // userVaults() {
+    //   return this.$store.state.userVaults;
+    // }
+  },
+  methods: {
+    addKeep(keep) {
+      this.$store.dispatch("addKeep", this.keep);
+    },
+    addVault(vault) {
+      this.$store.dispatch("addVault", this.vault);
+    },
+    addVaultKeep(keep) {
+      var keepId = keep.id;
+      var vaultId = this.selectedVault;
+      this.$store.dispatch("addVaultKeep", { vaultId, keepId });
+      this.selected = "";
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    }
+    // deleteKeep(keep) {
+    //   this.$store.dispatch("deleteKeep", keep);
+    // },
+    // deleteVault(vault) {
+    //   this.$store.dispatch("deleteVault", vault);
+    // },
+  }
+};
 </script>
 
 <style>

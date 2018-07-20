@@ -96,7 +96,6 @@ export default new vuex.Store({
         .then(res => {
           commit('setUser', res.data)
           router.push({ name: 'Profile' })
-          debugger
           dispatch("getVaults", res.data.id)
         })
         .catch(res => {

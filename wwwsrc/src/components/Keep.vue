@@ -84,9 +84,9 @@ export default {
     vaults() {
       return this.$store.state.vaults;
     },
-    userVaults() {
-      return this.$store.state.userVaults;
-    }
+    // userVaults() {
+    //   return this.$store.state.userVaults;
+    // }
     // activeVault() {
     //   return this.$store.state.activeVault;
     // }
@@ -105,12 +105,6 @@ export default {
     deleteKeep(keep) {
       this.$store.dispatch("deleteKeep", keep);
     },
-    // addVaultKeep(keep) {
-    //   keepId = keep.Id;
-    //   vaultId = this.selectedVault
-    //   this.$store.dispatch("addVaultKeep", {vaultId, keepId});
-    //   this.selected = "";
-    // },
     deleteVault(vault) {
       this.$store.dispatch("deleteVault", vault);
     },
