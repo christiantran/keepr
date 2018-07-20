@@ -1,15 +1,53 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="keep in vault">
-                <h3>{{keep.body}}</h3>
-                <select v-model="selected" @change="moveKeep(keep)">
-                    <option disabled value="">Move to Vault:</option>
-                    <option v-for="vault in vaults" v-if="keep.parentId!=vault._id" v-bind:value="keep._id">{{vault.title}}</option>
-                </select>
-                <!-- <button @click="deleteKeep(keep)">Delete Keep</button> -->
-            </li>
-        </ul>
+    <div class="container ">
+        <div>
+
+<!-- KEEP CARD -->
+            <div v-for="k in keeps" v-if="keep.public == 1" :key="k.id" class="card">
+                <h3 class="card-title">{{keep.name}}</h3>
+                <div class="container">
+                    <img :src="keep.img" alt="">
+                    <div class="buttons">
+                        <button class="btn" @click="addView(keep)">View</button>
+                            <button @click="deleteKeep(keep)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="card-text">{{keep.description}}</h3>
+            </div>
+
+<!-- KEEP MODAL -->
+            <div class="modal fade" id="viewKeepModal" tabindex="-1" role="dialog" aria-labelledby="viewKeepModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{viewKeep.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <img :src="viewKeep.img" alt="">
+                                    <h3 class="card-text">{{viewKeep.description}}</h3>
+                                </div>
+                                <div class="form-group">
+                                    <select v-model="vault">
+                                        <option disabled value="">Select a Vault</option>
+                                        <option v-for="v in userVaults" :key="v.id" :value="vault">{{vault.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" @click="addVaultKeep(vault)" data-dismiss="modal">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
     </div>
 </template>
 
@@ -23,7 +61,13 @@ export default {
         name: "",
         description: "",
         img: ""
-      }
+      },
+      vault: {
+        name: "",
+        description: ""
+      },
+      viewKeep: {},
+      selectedVault: {}
     };
   },
   components: {},
@@ -39,7 +83,13 @@ export default {
     },
     vaults() {
       return this.$store.state.vaults;
+    },
+    userVaults() {
+      return this.$store.state.userVaults;
     }
+    // activeVault() {
+    //   return this.$store.state.activeVault;
+    // }
   },
   methods: {
     addKeep() {
@@ -48,13 +98,21 @@ export default {
     // setKeep(keep) {
     //   this.$store.dispatch("setKeep", keep);
     // },
-    // deleteKeep(keep) {
-    //   this.$store.dispatch("deleteKeep", keep);
+
+    editKeep(keep) {
+      this.$store.dispatch("editKeep", keep)
+    },  
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
+    },
+    // addVaultKeep(keep) {
+    //   keepId = keep.Id;
+    //   vaultId = this.selectedVault
+    //   this.$store.dispatch("addVaultKeep", {vaultId, keepId});
+    //   this.selected = "";
     // },
-    moveKeep(keep) {
-      keep.parentId = this.selected;
-      this.$store.dispatch("moveKeep", keep);
-      this.selected = "";
+    deleteVault(vault) {
+      this.$store.dispatch("deleteVault", vault);
     },
     logout() {
       this.$store.dispatch("logout");

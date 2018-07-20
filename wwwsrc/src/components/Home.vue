@@ -75,6 +75,8 @@
 
 <script>
 import router from "../router";
+import Profile from "./Profile";
+import Keep from "./Keep";
 export default {
   name: "Home",
   data() {
@@ -90,8 +92,13 @@ export default {
       }
     };
   },
+  components: {
+    Profile,
+    Keep
+  },
   mounted() {
     this.$store.dispatch("getKeeps");
+    this.$store.dispatch("authenticate", this.login);
   },
 
   computed: {
@@ -106,7 +113,10 @@ export default {
     },
     userRegister() {
       this.$store.dispatch("register", this.register);
-    }
+    },
+    getKeeps() {
+      this.$store.dispatch("getKeeps", this.user)
+    },
   }
 };
 </script>

@@ -9,48 +9,48 @@
 </template>
 
 <script>
-  import router from "../router";
-  // import keep from "./Keep";
-  export default {
-    name: "Vaults",
-    data() {
-      return {
-        vault: {
-          name: "",
-          description: "",
-        }
-      };
-    },
-    components: {},
-    mounted() {
-      this.$store.dispatch("getVaults");
-    },
-    computed: {
-      user() {
-        return this.$store.state.user;
-      },
-      vaults() {
-        return this.$store.state.vaults;
-      },
-      keeps() {
-        return this.$store.state.keeps;
+import router from "../router";
+// import keep from "./Keep";
+export default {
+  name: "Vaults",
+  data() {
+    return {
+      vault: {
+        name: "",
+        description: ""
       }
+    };
+  },
+  components: {},
+  mounted() {
+    this.$store.dispatch("getVaultKeeps", this.vaultId);
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-    methods: {
-      addVault() {
-        this.$store.dispatch("addVault", this.vault);
-      },
-      // setVault(vault) {
-      //   this.$store.dispatch("setVault", vault);
-      // },
-      deleteVault(vault) {
-        this.$store.dispatch("deleteVault", vault);
-      },
-      deleteKeep(keep) {
-        this.$store.dispatch("deleteKeep", keep);
-      }
+    vaults() {
+      return this.$store.state.vaults;
+    },
+    vaultKeeps() {
+      return this.$store.state.vaultKeeps;
     }
-  };
+  },
+  methods: {
+    addVault() {
+      this.$store.dispatch("addVault", this.vault);
+    },
+    // deleteVault(vault) {
+    //   this.$store.dispatch("deleteVault", vault);
+    // },
+    // deleteKeep(keep) {
+    //   this.$store.dispatch("deleteKeep", keep);
+    // },
+    logout() {
+      this.$store.dispatch("logout");
+    }
+  }
+};
 </script>
 
 <style>
