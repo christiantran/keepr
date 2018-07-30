@@ -74,51 +74,101 @@
 
 
 <script>
-import router from "../router";
-import Profile from "./Profile";
-import Keep from "./Keep";
-export default {
-  name: "Home",
-  data() {
-    return {
-      login: {
-        username: "",
-        password: ""
-      },
-      register: {
-        username: "",
-        email: "",
-        password: ""
+// import router from "../router";
+// //import Profile from "./Profile";
+// //import Keep from "./Keep";
+// export default {
+//   name: "Home",
+//   data() {
+//     return {
+//       login: {
+//         username: "",
+//         password: ""
+//       },
+//       register: {
+//         username: "",
+//         email: "",
+//         password: ""
+//       }
+//     };
+//   },
+//   components: {
+//     // Profile,
+//     // Keep
+//   },
+//   mounted() {
+//     //this.$store.dispatch("getKeeps");
+//     if (!this.$store.state.user) {
+//       this.$store.dispatch("authenticate");
+//     }
+//   },
+
+//   computed: {
+//     user() {
+//       return this.$store.state.user;
+//     }
+//   },
+
+//   methods: {
+//     userLogin() {
+//       this.$store.dispatch("login", this.login);
+//     },
+//     userRegister() {
+//       this.$store.dispatch("register", this.register);
+//     },
+//     // getKeeps() {
+//     //   this.$store.dispatch("getKeeps", this.user);
+//     // }
+//   }
+// };
+
+  import router from '../router'
+  import UserProfile from './Profile'
+  import Keep from './Keep'
+  export default {
+    name: 'Home',
+    components: {
+      UserProfile,
+      Keep
+    },
+    data() {
+      return {
+        login: {
+          email: '',
+          password: ''
+        },
+        register: {
+          username: '',
+          email: '',
+          password: '',
+        }
       }
-    };
-  },
-  components: {
-    Profile,
-    Keep
-  },
-  mounted() {
-    this.$store.dispatch("getKeeps");
-    
-  },
-
-  computed: {
-    user() {
-      return this.$store.state.user;
-    }
-  },
-
-  methods: {
-    userLogin() {
-      this.$store.dispatch("login", this.login);
     },
-    userRegister() {
-      this.$store.dispatch("register", this.register);
-    },
-    getKeeps() {
+    mounted() {
       this.$store.dispatch("getKeeps", this.user)
+      this.$store.dispatch("getUserKeeps", this.user)
+      this.$store.dispatch("authenticate", this.login)
     },
+    computed: {
+      user() {
+        return this.$store.state.user
+      }
+    },
+    methods: {
+      userLogin() {
+        this.$store.dispatch('login', this.login)
+      },
+      userRegister() {
+        this.$store.dispatch('register', this.register)
+      },
+      getKeeps() {
+        this.$store.dispatch('getKeeps', this.user)
+      },
+      getUserKeeps() {
+        this.$store.dispatch('getUserKeeps', this.user)
+      }
+    }
   }
-};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

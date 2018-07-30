@@ -69,74 +69,86 @@
 </template>
 
 <script>
-  import router from "../router";
-  export default {
-    name: "Profile",
-    components: {
-      vaultKeeps: [],
-    },
-    data() {
-      return {
-        keep: {
-          name: "",
-          description: "",
-          img: ""
-        },
-        vault: {
-          name: "",
-          description: ""
-        },
-        selectedVault: ""
-      };
-    },
-    mounted() {
-      this.$store.dispatch("getKeeps");
-      
-      //this.$store.dispatch("getVaultKeeps");
-      //this.$store.dispatch("getVaults"); //, this.user.id);
-    },
+import router from "../router";
+export default {
+  name: "Profile",
+  components: {
+    vaultKeeps: []
+  },
+  data() {
+    return {
+      keep: {
+        name: "",
+        description: "",
+        img: "",
+        views: 0,
+        keeps: 0,
+        userId: "",
+        vaultId: ""
+      },
+      viewKeep: {},
+      vault: {
+        name: "",
+        description: ""
+      },
+      selectedVault: ""
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getKeeps");
 
-    computed: {
-      user() {
-        return this.$store.state.user;
-      },
-      keeps() {
-        return this.$store.state.keeps;
-      },
-      vaults() {
-        return this.$store.state.userVaults;
-      },
-      vaultKeeps() {
-        return this.$store.state.vaultKeeps;
-      }
-      // userVaults() {
-      //   return this.$store.state.userVaults;
-      // }
+    //this.$store.dispatch("getVaultKeeps");
+    this.$store.dispatch("getVaults", this.user.id);
+  },
+
+  computed: {
+    user() {
+      return this.$store.state.user;
     },
-    methods: {
-      addKeep(keep) {
-        this.$store.dispatch("addKeep", this.keep);
-      },
-      addVault(vault) {
-        this.$store.dispatch("addVault", this.vault);
-      },
-      addVaultKeep(keep) {
-        var keepId = keep.id;
-        var vaultId = this.selectedVault;
-        this.$store.dispatch("addVaultKeep", { vaultId, keepId });
-        this.selected = "";
-      },
-      logout() {
-        this.$store.dispatch("logout");
-      }
-      // deleteKeep(keep) {
-      //   this.$store.dispatch("deleteKeep", keep);
-      // },
-      // deleteVault(vault) {
-      //   this.$store.dispatch("deleteVault", vault);
-      // },
+    keeps() {
+      return this.$store.state.keeps;
+    },
+    vaults() {
+      return this.$store.state.userVaults;
+    },
+    vaultKeeps() {
+      return this.$store.state.vaultKeeps;
     }
-  };
+    // userVaults() {
+    //   return this.$store.state.userVaults;
+    // }
+  },
+  methods: {
+    addKeep(keep) {
+      this.$store.dispatch("addKeep", this.keep);
+    },
+    addVault(vault) {
+      this.$store.dispatch("addVault", this.vault);
+    },
+    addVaultKeep(keep) {
+      var keepId = keep.id;
+      var vaultId = this.selectedVault;
+      this.$store.dispatch("addVaultKeep", { vaultId, keepId });
+      this.selected = "";
+      this.viewKeep.keeps++
+    },
+    addView(keep) {
+      keep.views++;
+      this.$store.dispatch("updateKeep", keep);
+      this.viewKeep = keep;
+      // $("#viewKeepModal").modal("show");
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    },
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
+    },
+    deleteVault(vault) {
+      this.$store.dispatch("deleteVault", vault);
+    }
+  }
+};
 </script>
 
 <style>

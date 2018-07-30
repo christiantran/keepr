@@ -18,8 +18,8 @@ namespace keepr.Repositories
         public Keep CreateKeep(Keep newKeep)
         {
             int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO keeps (name, description, img, authorId)
-                VALUES (@Name, @Description, @Img, @AuthorId);
+                INSERT INTO keeps (name, description, img, views, keeps, public, authorId)
+                VALUES (@Name, @Description, @Img, @Views, @Keeps, @Public, @AuthorId);
                 SELECT LAST_INSERT_ID();
             ", newKeep);
             newKeep.Id = id;
@@ -46,7 +46,7 @@ namespace keepr.Repositories
         }
 
         // GET BY ID
-        public Keep GetbyKeepId(string id)
+        public Keep GetbyKeepId(int id)
         {
             return _db.QueryFirstOrDefault<Keep>("SELECT * FROM keeps WHERE id = @id;", new { id });
         }
@@ -60,7 +60,10 @@ namespace keepr.Repositories
                 UPDATE keeps SET
                     name = @Name,
                     description = @Description,
-                    img =@img,
+                    img =@Img,
+                    views = @Views, 
+                    keeps = @Keeps, 
+                    public = @Public,
                     authorId = @AuthorId
                 WHERE id = @Id
             ", editKeep);

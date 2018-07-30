@@ -48,14 +48,21 @@ namespace keepr.Controllers
         }
 
         //GET BY ID
-        [HttpGet("{id}")]
-        public Keep GetById(string id)
+        // [HttpGet("{id}")]
+        // public Keep GetById(string id)
+        // {
+        //     return _db.GetbyKeepId(id);
+        // }
+
+                [HttpGet("{id}")]
+        public Keep GetById(int id)
         {
             return _db.GetbyKeepId(id);
         }
 
         //GET BY AUTHOR
-        [HttpGet("author/{id}")]
+        [HttpGet("user/{id}")]
+        [Authorize]
         public IEnumerable<Keep> GetByAuthorId(string id)
         {
             return _db.GetbyAuthorId(id);
@@ -71,6 +78,7 @@ namespace keepr.Controllers
 
         // //EDIT KEEPS
         [HttpPut("{id}")]
+        [Authorize]
         public Keep EditKeep(int id, [FromBody]Keep editKeep)
         {
             if (ModelState.IsValid)

@@ -1,9 +1,9 @@
 <template>
     <div class="container ">
-        <div>
+    <!-- <div> -->
 
 <!-- KEEP CARD -->
-            <div v-for="k in keeps" v-if="keep.public == 1" :key="k.id" class="card">
+            <!-- <div v-for="k in keeps" v-if="keep.public == 1" :key="k.id" class="card">
                 <h3 class="card-title">{{keep.name}}</h3>
                 <div class="container">
                     <img :src="keep.img" alt="">
@@ -14,10 +14,10 @@
                     </div>
                 </div>
                 <h3 class="card-text">{{keep.description}}</h3>
-            </div>
+            </div> -->
 
 <!-- KEEP MODAL -->
-            <div class="modal fade" id="viewKeepModal" tabindex="-1" role="dialog" aria-labelledby="viewKeepModalTitle" aria-hidden="true">
+            <!-- <div class="modal fade" id="viewKeepModal" tabindex="-1" role="dialog" aria-labelledby="viewKeepModalTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -46,73 +46,73 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
     </div>
 </template>
 
 <script>
-import router from "../router";
-export default {
-  name: "Keeps",
-  data() {
-    return {
-      keep: {
-        name: "",
-        description: "",
-        img: ""
-      },
-      vault: {
-        name: "",
-        description: ""
-      },
-      viewKeep: {},
-      selectedVault: {}
-    };
-  },
-  components: {},
-  mounted() {
-    this.$store.dispatch("getKeeps");
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    keeps() {
-      return this.$store.state.keeps;
-    },
-    vaults() {
-      return this.$store.state.vaults;
-    },
-    // userVaults() {
-    //   return this.$store.state.userVaults;
-    // }
-    // activeVault() {
-    //   return this.$store.state.activeVault;
-    // }
-  },
-  methods: {
-    addKeep() {
-      this.$store.dispatch("addKeep", this.keep);
-    },
-    // setKeep(keep) {
-    //   this.$store.dispatch("setKeep", keep);
-    // },
+// import router from "../router";
+// export default {
+//   name: "Keeps",
+//   data() {
+//     return {
+//       keep: {
+//         name: "",
+//         description: "",
+//         img: ""
+//       },
+//       vault: {
+//         name: "",
+//         description: ""
+//       },
+//       viewKeep: {},
+//       selectedVault: {}
+//     };
+//   },
+//   components: {},
+//   mounted() {
+//     this.$store.dispatch("getKeeps");
+//   },
+//   computed: {
+//     user() {
+//       return this.$store.state.user;
+//     },
+//     keeps() {
+//       return this.$store.state.keeps;
+//     },
+//     vaults() {
+//       return this.$store.state.vaults;
+//     },
+//     // userVaults() {
+//     //   return this.$store.state.userVaults;
+//     // }
+//     // activeVault() {
+//     //   return this.$store.state.activeVault;
+//     // }
+//   },
+//   methods: {
+//     addKeep() {
+//       this.$store.dispatch("addKeep", this.keep);
+//     },
+//     // setKeep(keep) {
+//     //   this.$store.dispatch("setKeep", keep);
+//     // },
 
-    editKeep(keep) {
-      this.$store.dispatch("editKeep", keep)
-    },  
-    deleteKeep(keep) {
-      this.$store.dispatch("deleteKeep", keep);
-    },
-    deleteVault(vault) {
-      this.$store.dispatch("deleteVault", vault);
-    },
-    logout() {
-      this.$store.dispatch("logout");
-    }
-  }
-};
+//     editKeep(keep) {
+//       this.$store.dispatch("editKeep", keep)
+//     },  
+//     deleteKeep(keep) {
+//       this.$store.dispatch("deleteKeep", keep);
+//     },
+//     deleteVault(vault) {
+//       this.$store.dispatch("deleteVault", vault);
+//     },
+//     logout() {
+//       this.$store.dispatch("logout");
+//     }
+//   }
+// };
 </script>
 
 <style>

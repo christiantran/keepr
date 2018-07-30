@@ -10,23 +10,27 @@
 </template>
 
 <script>
-
 export default {
   name: "Vaults",
   data() {
     return {
+      keep: {
+        name: "",
+        description: "",
+        img: ""
+      },
       vault: {
         name: "",
         description: ""
       }
     };
   },
-  props: ['vaultId'],
+  props: ["vaultId"],
   components: {
     //vaultKeeps: []
   },
   mounted() {
-    this.$store.dispatch("getVaults");
+    //this.$store.dispatch("getVaults");
     this.$store.dispatch("getVaultKeeps", this.vaultId);
   },
   computed: {
@@ -41,15 +45,15 @@ export default {
     }
   },
   methods: {
-    addVault() {
-      this.$store.dispatch("addVault", this.vault);
+    // addVault() {
+    //   this.$store.dispatch("addVault", this.vault);
+    // },
+    deleteVault(vault) {
+      this.$store.dispatch("deleteVault", vault);
     },
-    // deleteVault(vault) {
-    //   this.$store.dispatch("deleteVault", vault);
-    // },
-    // deleteKeep(keep) {
-    //   this.$store.dispatch("deleteKeep", keep);
-    // },
+    deleteKeep(keep) {
+      this.$store.dispatch("deleteKeep", keep);
+    },
     logout() {
       this.$store.dispatch("logout");
     }
